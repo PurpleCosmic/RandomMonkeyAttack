@@ -19,9 +19,10 @@ class Window(QMainWindow):
         self.setWindowFlags(
             Qt.WindowType.WindowStaysOnTopHint |
             Qt.WindowType.FramelessWindowHint |
-            Qt.WindowType.X11BypassWindowManagerHint
+            Qt.WindowType.X11BypassWindowManagerHint |
+            Qt.WindowType.Tool
         )
-        self.setGeometry(QApplication.primaryScreen().geometry())
+        self.setGeometry(QApplication.primaryScreen().geometry().adjusted(0,0,0,-40))
         
         self.label = QLabel(self)
         self.label.setScaledContents(True)
