@@ -39,4 +39,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = Window()
     window.show()
+    signal.signal(signal.SIGINT, signal.SIG_DFL) # restore sigint functionality
     app.exec()
+    
