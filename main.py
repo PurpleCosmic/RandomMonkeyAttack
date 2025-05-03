@@ -1,10 +1,9 @@
 import sys
-import numpy as np
 import signal
-import cv2
+import random
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QShortcut
-from PyQt5.QtGui import QImage, QPixmap, QKeySequence
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QKeySequence, QMovie
+from PyQt5.QtCore import Qt
 
 class Window(QMainWindow):
     def __init__(self):
@@ -22,18 +21,14 @@ class Window(QMainWindow):
             Qt.WindowType.X11BypassWindowManagerHint
         )
         self.setGeometry(QApplication.primaryScreen().geometry())
+        
         self.label = QLabel(self)
-        self.label.resize(self.geometry().width(), self.geometry().height())
+        self.label.setGeometry(self.rect())
 
-        # Draw frame
-        width, height = self.width(), self.height()
-        frame = np.zeros((height, width, 4), dtype=np.uint8)
+        movie = QMovie("videos/monkey.gif")
+        self.label.setMovie(movie)
+        movie.start()
 
-        cv2.circle(frame, (width // 2, height // 2), 100, (255, 0, 255, 255), -1)
-
-        image = QImage(frame.data, width, height, QImage.Format_RGBA8888)
-        pixmap = QPixmap.fromImage(image)
-        self.label.setPixmap(pixmap)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -41,4 +36,3 @@ if __name__ == '__main__':
     window.show()
     signal.signal(signal.SIGINT, signal.SIG_DFL) # restore sigint functionality
     app.exec()
-    
